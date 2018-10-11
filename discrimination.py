@@ -1,6 +1,7 @@
 from keras import backend as K
-from keras.engine import InputSpec, Layer
 from keras import initializers, regularizers, constraints
+from keras.engine import InputSpec, Layer
+
 
 # From a PR that is not pulled into Keras
 # https://github.com/fchollet/keras/pull/3677
@@ -89,11 +90,11 @@ class MinibatchDiscrimination(Layer):
                                      shape=(None, input_dim))]
 
         self.W = self.add_weight(shape=(self.nb_kernels, input_dim, self.kernel_dim),
-            initializer=self.init,
-            name='kernel',
-            regularizer=self.W_regularizer,
-            trainable=True,
-            constraint=self.W_constraint)
+                                 initializer=self.init,
+                                 name='kernel',
+                                 regularizer=self.W_regularizer,
+                                 trainable=True,
+                                 constraint=self.W_constraint)
 
         # Set built to true.
         super(MinibatchDiscrimination, self).build(input_shape)
@@ -107,7 +108,7 @@ class MinibatchDiscrimination(Layer):
 
     def compute_output_shape(self, input_shape):
         assert input_shape and len(input_shape) == 2
-        return input_shape[0], input_shape[1]+self.nb_kernels
+        return input_shape[0], input_shape[1] + self.nb_kernels
 
     def get_config(self):
         config = {'nb_kernels': self.nb_kernels,

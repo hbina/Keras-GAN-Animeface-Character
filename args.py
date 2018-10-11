@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-class Args :
+class Args:
     # dataset size... Use positive number to sample subset of the full dataset.
     dataset_sz = -1
 
@@ -8,8 +8,8 @@ class Args :
     anim_dir = "anim"
 
     # images size we will work on. (sz, sz, 3)
-    sz = 64
-    
+    sz = 16
+
     # alpha, used by leaky relu of D and G networks.
     alpha_D = 0.2
     alpha_G = 0.2
@@ -38,8 +38,8 @@ class Args :
     discw = "disc.hdf5"
 
     # Weight initialization function.
-    #kernel_initializer = 'Orthogonal'
-    #kernel_initializer = 'RandomNormal'
+    # kernel_initializer = 'Orthogonal'
+    # kernel_initializer = 'RandomNormal'
     # Same as default in Keras, but good for GAN, says
     # https://github.com/gheinrich/DIGITS-GAN/blob/master/examples/weight-init/README.md#experiments-with-lenet-on-mnist
     kernel_initializer = 'glorot_uniform'
