@@ -178,7 +178,7 @@ def train_autoenc( dataf ):
     autoenc.compile(optimizer=opt, loss='mse')
 
     epoch = 0
-    while epoch < 200 :
+    while True :
         for i in range(10) :
             reals = sample_faces( faces  )
             fakes, noises = sample_fake( gen )
@@ -218,7 +218,7 @@ def train_gan( dataf ) :
     logger.on_train_begin() # initialize csv file
     with h5py.File( dataf, 'r' ) as f :
         faces = f.get( 'faces' )
-        run_batches(gen, disc, gan, faces, logger, range(5000))
+        run_batches(gen, disc, gan, faces, logger, range(1000000))
     logger.on_train_end()
 
 
@@ -237,7 +237,7 @@ def run_batches(gen, disc, gan, faces, logger, itr_generator):
         # My dataset works without this.
         #reals += 0.5 * np.exp(-batch/100) * np.random.normal( size=reals.shape )
 
-        if batch % 10 == 0 :
+        if batch % 100 == 0 :
             if len(history) > Args.history_sz:
                 history.pop(0) # evict oldest
             history.append( (reals, fakes) )
@@ -330,10 +330,10 @@ def main( argv ) :
     # it should be enough to GAN-generate stuff.
     # Pretraining gen isn't that useful in gan training as
     # the untrained discriminator will soon ruin everything.
-    #train_autoenc( "data.hdf5" )
+    # train_autoenc( "data2.hdf5" )
 
     # train GAN with inputs in data.hdf5
-    train_gan( "data.hdf5" )
+    train_gan( "data2.hdf5" )
 
     # Lets generate stuff
     #generate( "gen.hdf5", 256 )
