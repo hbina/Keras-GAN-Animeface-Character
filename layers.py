@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-from keras.layers.convolutional import Conv2DTranspose
-from keras.initializers import Constant
 import numpy as np
-
+from keras.initializers import Constant
+from keras.layers.convolutional import Conv2DTranspose
 
 
 def upsample_filt(size):
@@ -16,7 +15,7 @@ def upsample_filt(size):
 
 
 def bilinear_upsample_weights(factor, number_of_classes):
-    filter_size = factor*2 - factor%2
+    filter_size = factor * 2 - factor % 2
     weights = np.zeros((filter_size, filter_size, number_of_classes, number_of_classes),
                        dtype=np.float32)
     upsample_kernel = upsample_filt(filter_size)
@@ -26,11 +25,11 @@ def bilinear_upsample_weights(factor, number_of_classes):
 
 
 def bilinear2x(x, nfilters):
-	'''
+    '''
     Ugh, I don't like making layers.
     My credit goes to: https://kivantium.net/keras-bilinear
     '''
-	return Conv2DTranspose(nfilters, (4, 4),
-        strides=(2, 2),
-        padding='same',
-		kernel_initializer=Constant(bilinear_upsample_weights(2, nfilters)))(x)
+    return Conv2DTranspose(nfilters, (4, 4),
+                           strides=(2, 2),
+                           padding='same',
+                           kernel_initializer=Constant(bilinear_upsample_weights(2, nfilters)))(x)
